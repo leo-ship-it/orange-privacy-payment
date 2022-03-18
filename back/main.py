@@ -41,7 +41,18 @@ def call_contract():
     creatorAddress = "0x6C4754E5D7362eDb8947877EE07b6b60b4d9F4B3"
     creator_contract = w3.eth.contract(address=creatorAddress,abi=interface['abi'])
     r = creator_contract.functions.deploy().call()
-    r1 = creator_contract.functions.getAllContract().call()
-    print(r, r1)
+    # r1 = creator_contract.functions.getAllContract().call()
+    print(r)
     f.close()
     return("New contract created at", str(r))
+
+@app.route('/get')
+def getContract():
+    w3 = Web3(Web3.HTTPProvider('http://127.0.0.1:8545'))
+    f = open('contract_interface/Creator.json')
+    interface = json.load(f)
+    creatorAddress = "0x6C4754E5D7362eDb8947877EE07b6b60b4d9F4B3"
+    creator_contract = w3.eth.contract(address=creatorAddress,abi=interface['abi'])
+    r1 = creator_contract.functions.getAllContract().call()
+    print(r1)
+    return ("found")

@@ -2,10 +2,10 @@ import Web3 from 'web3';
 import React, { useEffect, useState } from "react";
 import erc20Interface from "../contract_interface/MetaCoin.json";
 import creatorInterface from "../contract_interface/Creator.json";
+import DeployNewToken from './DeployNewToken';
 
 export default function Account() {
     const [balance, setBalance] = useState("");
-    const [contractBal, setContractBal] = useState("");
     const [account, setAccount] = useState();
     const [contract_balance_list_s, setcontract_balance_list_s] = useState([]);
 
@@ -15,7 +15,6 @@ export default function Account() {
     let result_list = [];
 
 
-    const exampleContract = "0x02BA2030EA72486e13cA756D8B243295568Eb88f";
     const creatorAddress = "0x6C4754E5D7362eDb8947877EE07b6b60b4d9F4B3";
     const adr = "0x4936762f3C1B553748851900E60d9DBbcF278d1c";
 
@@ -45,18 +44,14 @@ export default function Account() {
     useEffect(() => {
         async function load() {
             const accounts = await web3.eth.getAccounts();
-            var contract = new web3.eth.Contract(erc20Interface.abi, exampleContract);
             var creator_contract = new web3.eth.Contract(creatorInterface.abi, creatorAddress);
-            let result = await contract.methods.balanceOf(adr).call();
             result_list = await creator_contract.methods.getAllContract().call();
             setContract_list(result_list);
-            // let r2 = await loadBalance();
             console.log(result_list);
             setAccount(accounts[0]);
             loadBalance();
             const bal = await web3.eth.getBalance(adr);
             setBalance(bal);
-            setContractBal(result);
         };
         load();
 
@@ -67,6 +62,8 @@ export default function Account() {
             <div>
                 <p>Balance : {balance.slice(0, balance.length - 18)}.{balance.slice(balance.length - 18, balance.length - 16)} ETH</p>
                 <p>Account : {account}</p>  
+                <DeployNewToken account={account} />
+
                 <table>
                     <tr>
                         <th>Contract Address</th>
