@@ -155,7 +155,7 @@ contract MetaCoin is IERC20 {
         _symbol = "ORN";
         _decimals = 2;
 
-        _mint(0x4936762f3C1B553748851900E60d9DBbcF278d1c, 100000 * 10 ** 2); // CAUTION!
+        _mint(0x62B9a2F427Ae8649b2467e08095C65551140926d, 100000 * 10 ** 2); // CAUTION!
     }
 
     /**

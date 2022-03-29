@@ -76,8 +76,7 @@ export default function Account() {
                                     {e.contract.slice(0,8)}
                                 </td>
                                 <td>
-                                    {e.balance.slice(0, e.balance.length - 2)}.{e.balance.slice(e.balance.length - 3, e.balance.length - 1)}
-                                    {/* {e.balance} */}
+                                    {e.balance == 0 ? 0 : e.balance.slice(0, e.balance.length - 2)}.{e.balance.slice(e.balance.length - 3, e.balance.length - 1)}
                                 </td>
                             </tr>
                         );
