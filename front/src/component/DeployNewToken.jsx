@@ -6,12 +6,7 @@ import { ethers } from 'ethers';
 
 export default function DeployNewToken (props) {
     const creatorAddress = "0x6C4754E5D7362eDb8947877EE07b6b60b4d9F4B3";
-    const web3 = new Web3("http://localhost:8545");
 
-    var creator_contract = new web3.eth.Contract(creatorInterface.abi, creatorAddress);
-    const account = props.account;
-
-    
     async function createContract() {
         const {ethereum} = window;
 
@@ -27,21 +22,20 @@ export default function DeployNewToken (props) {
 
             await txn.wait();
 
-            console.log(`Created, check txn at ${txn.hash}`)
-            
+            console.log(`Created, check txn at ${txn.hash}`)   
         }
-        let r = await creator_contract.methods.deploy().send({from:account});
-        console.log(r);
-        let r2 = await creator_contract.methods.getAllContract().call();
-        console.log(r2);
+    }
+
+    async function requestService() {
 
     }
 
     return(
-        <>
+        <div style={{display:"flex", flexDirection:"column", width: "auto"}}>
             <button onClick={createContract}>
                 Click to deploy new erc20
             </button>
-        </>
+
+        </div>
     );
 }

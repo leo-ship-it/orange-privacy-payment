@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import erc20Interface from "../contract_interface/MetaCoin.json";
 import creatorInterface from "../contract_interface/Creator.json";
 import DeployNewToken from './DeployNewToken';
+import Escrow from "./Escrow";
 
 export default function Account() {
     const [balance, setBalance] = useState("");
@@ -21,7 +22,6 @@ export default function Account() {
     async function loadBalance() {
         if(account == null) setAccount(adr);
         let contract_balance_list = [];
-        let result = 0;
         for (var k = 0; k < contract_list.length; k++) {
 
             console.log(contract_list[k]);
@@ -63,6 +63,7 @@ export default function Account() {
                 <p>Balance : {balance.slice(0, balance.length - 18)}.{balance.slice(balance.length - 18, balance.length - 16)} ETH</p>
                 <p>Account : {account}</p>  
                 <DeployNewToken account={account} />
+                <Escrow />
 
                 <table>
                     <tr>
