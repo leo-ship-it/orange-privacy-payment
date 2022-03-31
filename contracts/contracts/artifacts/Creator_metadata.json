@@ -1,0 +1,129 @@
+{
+	"compiler": {
+		"version": "0.5.0+commit.1d4f565a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "contracts",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "deploy",
+				"outputs": [
+					{
+						"name": "newcontract",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getAllContract",
+				"outputs": [
+					{
+						"name": "alladdress",
+						"type": "address[]"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "last_contract",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getLastContract",
+				"outputs": [
+					{
+						"name": "lastcontract",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"name": "_owner",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/Creator.sol": "Creator"
+		},
+		"evmVersion": "byzantium",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/Creator.sol": {
+			"keccak256": "0x2b6cff2ef4d7a98cc830e8a8928fb7a6d1fc3cc930a47f45dcb9810efd5b140c",
+			"urls": [
+				"bzzr://25b74c2488734424fbc069d0bf48f1f46b74a9ecd78877df89fa4943a398da26"
+			]
+		},
+		"contracts/MetaCoin.sol": {
+			"keccak256": "0x868fd0f0b326c33d34dea61abe0d7d9719edaffce1e1c0d888830be7be0b1bfa",
+			"urls": [
+				"bzzr://df718f1583e8f4246380aa652eb4b09311ff401395887eced4fa745fe9e97111"
+			]
+		}
+	},
+	"version": 1
+}

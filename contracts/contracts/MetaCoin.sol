@@ -17,6 +17,8 @@ interface IERC20 {
 
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 
+    function finalize() external returns (bool);
+
     event Transfer(address indexed from, address indexed to, uint256 value);
 
     event Approval(address indexed owner, address indexed spender, uint256 value);
@@ -149,11 +151,13 @@ contract MetaCoin is IERC20 {
     string private _name;
     string private _symbol;
     uint8 private _decimals;
+    address private _owner;
 
     constructor () public {
         _name = "orangeCoin";
         _symbol = "ORN";
         _decimals = 2;
+        _owner = msg.sender;
 
         _mint(0x62B9a2F427Ae8649b2467e08095C65551140926d, 100000 * 10 ** 2); // CAUTION!
     }
@@ -216,6 +220,11 @@ contract MetaCoin is IERC20 {
      */
     function transfer(address recipient, uint256 amount) public returns (bool) {
         _transfer(msg.sender, recipient, amount);
+        return true;
+    }
+
+    function finalize() public returns (bool){
+        _finalize();
         return true;
     }
 
@@ -309,6 +318,7 @@ contract MetaCoin is IERC20 {
     function _transfer(address sender, address recipient, uint256 amount) internal {
         require(sender != address(0), "ERC20: transfer from the zero address");
         require(recipient != address(0), "ERC20: transfer to the zero address");
+        require(msg.sender == sender, "ERC20: Caller isn't sender");
 
         _balances[sender] = _balances[sender].sub(amount);
         _balances[recipient] = _balances[recipient].add(amount);
@@ -350,6 +360,12 @@ contract MetaCoin is IERC20 {
         _totalSupply = _totalSupply.sub(value);
         emit Transfer(account, address(0), value);
     }
+
+    function _finalize() internal {
+        require(msg.sender == _owner, "ERC20: Can't destroy caller isn't owner.");
+        selfdestruct(msg.sender);
+    }
+
 
     /**
      * @dev Sets `amount` as the allowance of `spender` over the `owner`s tokens.

@@ -9,7 +9,6 @@ fee = 5
 decimals = 100
     
 w3 = Web3(Web3.HTTPProvider('http://127.0.0.1:8545'))
-
 # Bank's wallet
 w3.eth.defaultAccount = "0x62B9a2F427Ae8649b2467e08095C65551140926d"
  
@@ -24,9 +23,22 @@ def init_transaction():
     amount = request.args.get('amount')
     f = open('contract_interface/Creator.json')
     interface = json.load(f)
-    creatorAddress = "0x6C4754E5D7362eDb8947877EE07b6b60b4d9F4B3"
+    creatorAddress = "0x30C9c0a3653c801773E21EA573d1C13bCA77e85F"
     creator_contract = w3.eth.contract(address=creatorAddress,abi=interface['abi'])
-    tx_hash = creator_contract.functions.deploy().transact()
+    # tx_hash = creator_contract.functions.deploy().transact()
+    raw_txn = creator_contract.functions.deploy().buildTransaction(
+        {
+     'chainId': 1337,
+     'gas': 70000,
+     'maxFeePerGas': w3.toWei('2', 'gwei'),
+     'maxPriorityFeePerGas': w3.toWei('1', 'gwei'),
+     'nonce': 0x00,
+ }
+    )
+    pk = '4a43f77cc5a1e8e2d1411a272b80dcbb6cfcbb01624553a81c59bd0ef4455efc'
+    signed_txn = w3.eth.account.sign_transaction(raw_txn, private_key=pk)
+    print(signed_txn.hash)
+    tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
     w3.eth.waitForTransactionReceipt(tx_hash)
     last = creator_contract.functions.getLastContract().call()
     print(last)
@@ -58,3 +70,38 @@ def pay():
     w3.eth.waitForTransactionReceipt(tx_hash)
     return tx_hash
 
+
+# Endpoint for the client to explicit that the service is done. Transfers token to service Provider.
+# In this example we don't check the Origin of the caller but this can be done by adding a rule to the transfer function of the smart contract
+# https://web3py.readthedocs.io/en/stable/web3.eth.account.html
+@app.route('/service_done')
+def service_done():
+    with open('transaction_data.json') as json_file:
+        data = json.load(json_file)
+    # amount = Web3.utils.toBN(data["amount"])
+    to = data["to"]
+    erc20add = data["contract"]
+    f = open('contract_interface/MetaCoin.json')
+    interface = json.load(f)
+    f.close()
+    erc20_contract = w3.eth.contract(address=erc20add,abi=interface['abi'])
+    tx_hash = erc20_contract.functions.transfer(to, 1990).transact()
+    w3.eth.waitForTransactionReceipt(tx_hash)
+    bal = erc20_contract.functions.balanceOf(to).call()
+
+    return str(bal)
+
+@app.route('/token_settlement')
+def token_settlement():
+    with open('transaction_data.json') as json_file:
+        data = json.load(json_file)
+    to = data["to"]
+    erc20add = data["contract"]
+    fro = data["from"]
+    f = open('contract_interface/MetaCoin.json')
+    interface = json.load(f)
+    f.close()
+    erc20_contract = w3.eth.contract(address=erc20add,abi=interface['abi'])
+    client_amount = erc20_contract.functions.balanceOf(fro).call()
+    provider_amount = erc20_contract.functions.balanceOf(to).call()
+    return f"Token settelement done. Payed Client : {client_amount} and Service Provider {provider_amount}"
