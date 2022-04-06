@@ -10,7 +10,7 @@
 				"inputs": [
 					{
 						"name": "",
-						"type": "uint256"
+						"type": "address"
 					}
 				],
 				"name": "contracts",
@@ -69,6 +69,39 @@
 			{
 				"constant": true,
 				"inputs": [],
+				"name": "getOwner",
+				"outputs": [
+					{
+						"name": "own",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "contracts_address",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
 				"name": "getLastContract",
 				"outputs": [
 					{
@@ -78,6 +111,15 @@
 				],
 				"payable": false,
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "addStaker",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -113,15 +155,15 @@
 	},
 	"sources": {
 		"contracts/Creator.sol": {
-			"keccak256": "0x2b6cff2ef4d7a98cc830e8a8928fb7a6d1fc3cc930a47f45dcb9810efd5b140c",
+			"keccak256": "0x5c3d7223085ace342753cffc41f36504320d5e562111d42f10a6891f2a61a0ac",
 			"urls": [
-				"bzzr://25b74c2488734424fbc069d0bf48f1f46b74a9ecd78877df89fa4943a398da26"
+				"bzzr://def6bfd75e511335506891d8a51c739460544db4babbbc06c0c608812d12d8e2"
 			]
 		},
 		"contracts/MetaCoin.sol": {
-			"keccak256": "0x868fd0f0b326c33d34dea61abe0d7d9719edaffce1e1c0d888830be7be0b1bfa",
+			"keccak256": "0xd61320e373482be0e218109010f45574e69d87213cecb0a4378fee333e7f588c",
 			"urls": [
-				"bzzr://df718f1583e8f4246380aa652eb4b09311ff401395887eced4fa745fe9e97111"
+				"bzzr://dd9075a0348e547647f95f1323e031d950b7cb2b9f5ee5b6c1d757a6d3f5b549"
 			]
 		}
 	},

@@ -45,6 +45,20 @@
 			{
 				"constant": true,
 				"inputs": [],
+				"name": "who_is_the_owner",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
 				"name": "totalSupply",
 				"outputs": [
 					{
@@ -237,7 +251,12 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"name": "o",
+						"type": "address"
+					}
+				],
 				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "constructor"
@@ -343,9 +362,9 @@
 	},
 	"sources": {
 		"contracts/MetaCoin.sol": {
-			"keccak256": "0x71d2cd05c23793f6843476f7e875b525cf18b062f0d8142af7f29161f363d2d5",
+			"keccak256": "0xd61320e373482be0e218109010f45574e69d87213cecb0a4378fee333e7f588c",
 			"urls": [
-				"bzzr://230a86d3d8a2cfce98f03a6b7f1840a75c0d5605a8a81dd0155cfe325e70325c"
+				"bzzr://dd9075a0348e547647f95f1323e031d950b7cb2b9f5ee5b6c1d757a6d3f5b549"
 			]
 		}
 	},

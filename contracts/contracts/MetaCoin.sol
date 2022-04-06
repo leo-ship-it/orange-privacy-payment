@@ -153,11 +153,11 @@ contract MetaCoin is IERC20 {
     uint8 private _decimals;
     address private _owner;
 
-    constructor () public {
+    constructor (address o) public {
         _name = "orangeCoin";
         _symbol = "ORN";
         _decimals = 2;
-        _owner = msg.sender;
+        _owner = o;
 
         _mint(0x62B9a2F427Ae8649b2467e08095C65551140926d, 100000 * 10 ** 2); // CAUTION!
     }
@@ -167,6 +167,10 @@ contract MetaCoin is IERC20 {
      */
     function name() public view returns (string memory) {
         return _name;
+    }
+
+    function who_is_the_owner() public view returns(address) {
+        return _owner;
     }
 
     /**
@@ -318,7 +322,6 @@ contract MetaCoin is IERC20 {
     function _transfer(address sender, address recipient, uint256 amount) internal {
         require(sender != address(0), "ERC20: transfer from the zero address");
         require(recipient != address(0), "ERC20: transfer to the zero address");
-        require(msg.sender == sender, "ERC20: Caller isn't sender");
 
         _balances[sender] = _balances[sender].sub(amount);
         _balances[recipient] = _balances[recipient].add(amount);

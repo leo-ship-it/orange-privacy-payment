@@ -9,8 +9,20 @@ fee = 5
 decimals = 100
     
 w3 = Web3(Web3.HTTPProvider('http://127.0.0.1:8545'))
-# Bank's wallet
+# Bank's wallet 
 w3.eth.defaultAccount = "0x62B9a2F427Ae8649b2467e08095C65551140926d"
+pk = '4a43f77cc5a1e8e2d1411a272b80dcbb6cfcbb01624553a81c59bd0ef4455efc'
+# Loading account from private key.
+w3.eth.account.privateKeyToAccount(pk)
+
+creatorAddress = "0x3E8B23e576ad350F3f0464a482cb976E6D105231"
+bankAddress="0x62B9a2F427Ae8649b2467e08095C65551140926d"
+f = open('contract_interface/Creator.json')
+interface = json.load(f)
+creator_contract = w3.eth.contract(address=creatorAddress,abi=interface['abi'])
+f.close()
+
+
  
 # Bank address : 0x62B9a2F427Ae8649b2467e08095C65551140926d
 # Bank private Key : 0x4a43f77cc5a1e8e2d1411a272b80dcbb6cfcbb01624553a81c59bd0ef4455efct
@@ -21,29 +33,11 @@ def init_transaction():
     address_from = request.args.get('from')
     address_to = request.args.get('to')
     amount = request.args.get('amount')
-    f = open('contract_interface/Creator.json')
-    interface = json.load(f)
-    creatorAddress = "0x30C9c0a3653c801773E21EA573d1C13bCA77e85F"
-    creator_contract = w3.eth.contract(address=creatorAddress,abi=interface['abi'])
-    # tx_hash = creator_contract.functions.deploy().transact()
-    raw_txn = creator_contract.functions.deploy().buildTransaction(
-        {
-     'chainId': 1337,
-     'gas': 70000,
-     'maxFeePerGas': w3.toWei('2', 'gwei'),
-     'maxPriorityFeePerGas': w3.toWei('1', 'gwei'),
-     'nonce': 0x00,
- }
-    )
-    pk = '4a43f77cc5a1e8e2d1411a272b80dcbb6cfcbb01624553a81c59bd0ef4455efc'
-    signed_txn = w3.eth.account.sign_transaction(raw_txn, private_key=pk)
-    print(signed_txn.hash)
-    tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
-    w3.eth.waitForTransactionReceipt(tx_hash)
-    last = creator_contract.functions.getLastContract().call()
-    print(last)
-    f.close()
     rate = random.random()
+    tx_hash = creator_contract.functions.deploy().transact()
+    print(tx_hash)
+    last = creator_contract.functions.getLastContract().call()
+    print(last) 
     data_to_store = {
         "from" : address_from,
         "to" : address_to,
@@ -91,6 +85,10 @@ def service_done():
 
     return str(bal)
 
+@app.route('/allocate')
+def allocate():
+    return f"Token allocated to bank"
+
 @app.route('/token_settlement')
 def token_settlement():
     with open('transaction_data.json') as json_file:
@@ -102,6 +100,12 @@ def token_settlement():
     interface = json.load(f)
     f.close()
     erc20_contract = w3.eth.contract(address=erc20add,abi=interface['abi'])
+    print(erc20_contract.functions.allowance(fro, bankAddress).call())
     client_amount = erc20_contract.functions.balanceOf(fro).call()
     provider_amount = erc20_contract.functions.balanceOf(to).call()
-    return f"Token settelement done. Payed Client : {client_amount} and Service Provider {provider_amount}"
+    txn_transferFrom = erc20_contract.functions.transferFrom(fro, to,100).transact({'from':bankAddress})
+    print(txn_transferFrom)
+    client_amount2 = erc20_contract.functions.balanceOf(fro).call()
+    provider_amount2 = erc20_contract.functions.balanceOf(to).call()
+
+    return f"Token settelement done. Payed Client : {client_amount,client_amount2} and Service Provider {provider_amount,provider_amount2}"
