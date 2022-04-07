@@ -23,12 +23,16 @@ export default function Account() {
         if(account == null) setAccount(adr);
         let contract_balance_list = [];
         for (var k = 0; k < contract_list.length; k++) {
-
-            console.log(contract_list[k]);
-            var contract = new web3.eth.Contract(erc20Interface.abi, contract_list[k]);
-            let result = await contract.methods.balanceOf(account).call();
-            contract_balance_list.push({ "contract": contract_list[k], "balance": result });
-            console.log(result);
+            try {
+                console.log(contract_list[k]);
+                var contract = new web3.eth.Contract(erc20Interface.abi, contract_list[k]);
+                let result = await contract.methods.balanceOf(account).call();
+                contract_balance_list.push({ "contract": contract_list[k], "balance": result });
+                console.log(result);
+            }
+            catch {
+                console.log("Contract has been deleted");
+            }
         }
         if (contract_balance_list != [] && contract_balance_list.length > 0) {
             console.log(contract_balance_list);
