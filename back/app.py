@@ -29,11 +29,11 @@ creator_contract = w3.eth.contract(
     address=creatorAddress, abi=interface['abi'])
 f.close()
 
-
-# Bank address : 0x62B9a2F427Ae8649b2467e08095C65551140926d
-# Bank private Key : 0x4a43f77cc5a1e8e2d1411a272b80dcbb6cfcbb01624553a81c59bd0ef4455efct
-
 # Endpoint to init new Transaction : draw token value, deploy new erc20, store client and service provider infos
+# Parameters: 
+# from : wallet address of the client
+# to : wallet address of the service proviedr
+# amount : amount of money implied in the transfer
 @app.route('/init_transaction')
 def init_transaction():
     address_from = request.args.get('from')
@@ -79,53 +79,43 @@ def pay():
 def service_done():
     with open(default["json_file_name"]) as json_file:
         data = json.load(json_file)
-    # amount = Web3.utils.toBN(data["amount"])
-    to = data["to"]
-    erc20add = data["contract"]
-    fro = data["from"]
-    amount = int(data["amount"])
     f = open('contract_interface/MetaCoin.json')
     interface = json.load(f)
     f.close()
-    erc20_contract = w3.eth.contract(address=erc20add, abi=interface['abi'])
-    txn_transferFrom = erc20_contract.functions.transferFrom(fro, bankAddress,amount).transact({'from':bankAddress})
+    erc20_contract = w3.eth.contract(address=data["contract"], abi=interface['abi'])
+    txn_transferFrom = erc20_contract.functions.transferFrom(data["from"], bankAddress, int(data["amount"])).transact({'from':bankAddress})
     w3.eth.waitForTransactionReceipt(txn_transferFrom)
-    return str(erc20_contract.functions.balanceOf(to).call())
+    return str(erc20_contract.functions.balanceOf(data["to"]).call())
 
 # API called by the provider when the service as been fullfilled, the bank transfer tokens to the provider's wallet
 @app.route('/service_fullfilled')
 def service_fullfilled():
     with open(default["json_file_name"]) as json_file:
         data = json.load(json_file)
-    to = data["to"]
-    erc20add = data["contract"]
-    fro = data["from"]
     f = open('contract_interface/MetaCoin.json')
     interface = json.load(f)
     f.close()
-    erc20_contract = w3.eth.contract(address=erc20add,abi=interface['abi'])
-    client_amount = erc20_contract.functions.balanceOf(fro).call()
-    tx_transfer = erc20_contract.functions.transfer(fro, int(client_amount)).transact()
+    erc20_contract = w3.eth.contract(address=data["contract"],abi=interface['abi'])
+    client_amount = erc20_contract.functions.balanceOf(data["from"]).call()
+    tx_transfer = erc20_contract.functions.transfer(data["from"], int(client_amount)).transact()
     print(tx_transfer)
     return f"Service Fullfilled"
 
 # When the client and the provider disagree on the service provided the tokens are dirstributed according a ratio
+# Parameters:
+# ratio : number between 0 and 1 that specifieces how much should be given to the services provider, the rest will be given back to the client
 @app.route('/service_claim')
 def service_claim():
     ratio = float(request.args.get('ratio'))
     assert(ratio >= 0 and ratio <= 1)
     with open(default["json_file_name"]) as json_file:
         data = json.load(json_file)
-    to = data["to"]
-    erc20add = data["contract"]
-    fro = data["from"]
-    amount = int(data["amount"])
     f = open('contract_interface/MetaCoin.json')
     interface = json.load(f)
     f.close()
-    erc20_contract = w3.eth.contract(address=erc20add,abi=interface['abi'])
-    tx_hash = erc20_contract.functions.transfer(to, int(ratio * amount)).transact()
-    tx_hash2 = erc20_contract.functions.transfer(fro, int((1-ratio)*amount)).transact()
+    erc20_contract = w3.eth.contract(address= data["contract"],abi=interface['abi'])
+    tx_hash = erc20_contract.functions.transfer(data["to"], int(ratio * int(data["amount"]))).transact()
+    tx_hash2 = erc20_contract.functions.transfer(data["from"], int((1-ratio)*int(data["amount"]))).transact()
     print(tx_hash, tx_hash2)
     return f"Claim Occured"
 
@@ -134,16 +124,12 @@ def service_claim():
 def token_settlement():
     with open(default["json_file_name"]) as json_file:
         data = json.load(json_file)
-    to = data["to"]
-    erc20add = data["contract"]
-    fro = data["from"]
-    to = data["to"]
     f = open('contract_interface/MetaCoin.json')
     interface = json.load(f)
     f.close()
-    erc20_contract = w3.eth.contract(address=erc20add,abi=interface['abi'])
-    client_amount = erc20_contract.functions.balanceOf(fro).call()
-    provider_amount = erc20_contract.functions.balanceOf(to).call()
+    erc20_contract = w3.eth.contract(address=data["contract"],abi=interface['abi'])
+    client_amount = erc20_contract.functions.balanceOf(data["from"]).call()
+    provider_amount = erc20_contract.functions.balanceOf(data["to"]).call()
     txn_transferFrom = erc20_contract.functions.finalize().transact()
     print(txn_transferFrom)
     return f"Token settelement done. Smart Contract Destroyed. Payed {client_amount} to client and {provider_amount} to provider"
