@@ -89,6 +89,11 @@ export default function Escrow() {
         .then(response => console.log(response));
     }
 
+    async function tokenSettlement() {
+        fetch(apiUrl + "token_settlement")
+        .then(response => console.log(response));
+    }
+
 
     useEffect(() => {
         async function getAddress() {
@@ -110,35 +115,31 @@ export default function Escrow() {
             <button onClick={requestService} style={{ width: "100%", marginLeft: "50%", marginRight: "50%" }}>
                 ?Request Service and Escrow Tokens
             </button>
-            <button onClick={newTransaction}>
+            <button onClick={newTransaction} style={{ width: "100%", marginLeft: "50%", marginRight: "50%" }}>
                 Init new transaction
             </button>
-            <button onClick={pay}>
+            <button onClick={pay} style={{ width: "100%", marginLeft: "50%", marginRight: "50%" }}>
                 Pay for tokens in exchange
             </button>
             <button onClick={allocateTokens} style={{ width: "100%", marginLeft: "50%", marginRight: "50%" }}>
                 Allocate
             </button>
-            <button onClick={service_done}>
+            <button onClick={service_done} style={{ width: "100%", marginLeft: "50%", marginRight: "50%" }}>
                 Service Done
             </button>
-            <button onClick={serviceFullfiled}>
+            <button onClick={serviceFullfiled} style={{ width: "100%", marginLeft: "50%", marginRight: "50%" }}>
                 Service FullFilled
             </button>
-            <div>
+            <div style={{ width: "100%", marginLeft: "50%", marginRight: "50%" }}>
                 <input type="text" value={claimval} onChange={e => setClaimval(e.target.value)}>
                 </input>
                 <button onClick={serviceClaim}>
                     Service Claim
                 </button>
             </div>
-            <button>
+            <button onClick={tokenSettlement} style={{ width: "100%", marginLeft: "50%", marginRight: "50%" }}>
                 Tokens settlment
             </button>
-
-            <p>
-                { }
-            </p>
         </div>
     )
 }
