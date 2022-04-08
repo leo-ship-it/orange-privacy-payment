@@ -5,40 +5,36 @@ import './MetaCoin.sol';
 
 contract Creator {
 
-    address[] public contracts_address;
-    address public last_contract;
+    address[] public tokens_address;
+    address public last_token;
     address private owner;
-    mapping(address => MetaCoin) public contracts;
+    mapping(address => MetaCoin) public tokens;
 
-
+// 
     constructor (address _owner) public {
         owner = _owner;
     }
 
-    function getLastContract() public view returns (address lastcontract) {
-        return last_contract;
+    function getLastContract() public view returns (address) {
+        return last_token;
     }
 
-    function addStaker() public payable {
-        require(msg.value == 1 ether);
-    }
-
-    function getOwner() public view returns (address own) {
+    function getOwner() public view returns (address) {
         return owner;
 
     }
 
-    function getAllContract() public view returns (address[] memory alladdress) {
-        return contracts_address;
+    function getAllContract() public view returns (address[] memory) {
+        return tokens_address;
     }
 
 	function deploy() public returns (address newcontract) {
         require(msg.sender == owner, "ERC20: Caller isn't owner");
         MetaCoin newToken = new MetaCoin(owner);
 		address contractAddress = address(newToken);
-        contracts[contractAddress] = newToken;
-        last_contract = contractAddress;
-        contracts_address.push(contractAddress);
+        tokens[contractAddress] = newToken;
+        last_token = contractAddress;
+        tokens_address.push(contractAddress);
         return contractAddress;
 	}
 }

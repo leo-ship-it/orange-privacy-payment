@@ -1,0 +1,8 @@
+{
+    "bank_address" : "0x62B9a2F427Ae8649b2467e08095C65551140926d",
+    "bank_private_key" : "4a43f77cc5a1e8e2d1411a272b80dcbb6cfcbb01624553a81c59bd0ef4455efc",
+    "erc_20_decimals" : 100,
+    "bank_fee" : 5,
+    "creator_contract_address" : "0x3E8B23e576ad350F3f0464a482cb976E6D105231",
+    "json_file_name" : "transaction_data.json"
+}
