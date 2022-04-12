@@ -17,7 +17,7 @@ interface IERC20 {
 
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 
-    function finalize() external returns (bool);
+    function finalize() external;
 
     event Transfer(address indexed from, address indexed to, uint256 value);
 
@@ -152,14 +152,15 @@ contract MetaCoin is IERC20 {
     string private _symbol;
     uint8 private _decimals;
     address private _owner;
+    // address private
 
-    constructor (address o) public {
+    constructor (uint256 supply) public {
         _name = "orangeCoin";
         _symbol = "ORN";
         _decimals = 2;
-        _owner = o;
+        _owner = msg.sender;
 
-        _mint(o, 100000 * 10 ** 2); // CAUTION!
+        _mint(msg.sender, supply * 10 ** 2); // CAUTION!
     }
 
     /**
@@ -227,9 +228,8 @@ contract MetaCoin is IERC20 {
         return true;
     }
 
-    function finalize() public returns (bool){
+    function finalize() public{
         _finalize();
-        return true;
     }
 
     /**

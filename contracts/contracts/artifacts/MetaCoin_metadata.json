@@ -138,12 +138,7 @@
 				"constant": false,
 				"inputs": [],
 				"name": "finalize",
-				"outputs": [
-					{
-						"name": "",
-						"type": "bool"
-					}
-				],
+				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -253,8 +248,8 @@
 			{
 				"inputs": [
 					{
-						"name": "o",
-						"type": "address"
+						"name": "supply",
+						"type": "uint256"
 					}
 				],
 				"payable": false,
@@ -362,9 +357,9 @@
 	},
 	"sources": {
 		"contracts/MetaCoin.sol": {
-			"keccak256": "0xd61320e373482be0e218109010f45574e69d87213cecb0a4378fee333e7f588c",
+			"keccak256": "0xc14b39bd3f8ab462e9dac80c22c4112b0cd0bd1554010243735f214ad4fb220e",
 			"urls": [
-				"bzzr://dd9075a0348e547647f95f1323e031d950b7cb2b9f5ee5b6c1d757a6d3f5b549"
+				"bzzr://27331ce90152be103e824d849eff4dd3219517e7b5996b7fec15df2a981e7e1d"
 			]
 		}
 	},

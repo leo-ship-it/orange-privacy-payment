@@ -26,12 +26,13 @@ contract BankContract {
         owner = msg.sender;
     }
 
-    function init_new_payment(address _client, address _service_provider, address _erc20, uint256 _amount, uint256 id) public {
+    function init_new_payment(address _client, address _service_provider, address _erc20, uint256 _claimRatio, uint256 _amount, uint256 id) public {
         privatePayment storage newPayment = privatePayments[id];
         newPayment.client = _client;
         newPayment.erc20 = _erc20;
         newPayment.service_provider = _service_provider;
         newPayment.claim = false;
+        newPayment.claimRatio = _claimRatio;
         newPayment.claimRatio = 1;
         newPayment.amount = _amount;
         paymentIds.push(id);

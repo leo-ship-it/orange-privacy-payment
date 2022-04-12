@@ -23,10 +23,9 @@ pk = default["bank_private_key"]
 w3.eth.account.privateKeyToAccount(pk)
 
 creatorAddress = default["creator_contract_address"]
-f = open('contract_interface/Creator.json')
+f = open('contract_interface/MetaCoin.json')
 interface = json.load(f)
-creator_contract = w3.eth.contract(
-    address=creatorAddress, abi=interface['abi'])
+erc20_constructor = w3.eth.contract(abi=interface['abi'], bytecode=interface['bytecode'])
 f.close()
 
 # Endpoint to init new Transaction : draw token value, deploy new erc20, store client and service provider infos
@@ -36,25 +35,24 @@ f.close()
 # amount : amount of money implied in the transfer
 @app.route('/init_transaction')
 def init_transaction():
-    address_from = request.args.get('from')
-    address_to = request.args.get('to')
+    address_client = request.args.get('client')
+    address_provider = request.args.get('provider')
     amount = request.args.get('amount')
     rate = random.random()
-    tx_hash = creator_contract.functions.deploy().transact()
-    print(tx_hash)
-    last = creator_contract.functions.getLastContract().call()
-    print(last)
+    tx_hash = erc20_constructor.constructor(default["erc_20_supply"]).transact()
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt.contractAddress)
     data_to_store = {
-        "from": address_from,
-        "to": address_to,
+        "client": address_client,
+        "provider": address_provider,
         "amount": amount,
         "fee": fee,
-        "contract": last,
+        "contract": tx_receipt.contractAddress,
         "rate": rate
     }
     with open(default["json_file_name"], 'w') as outfile:
         json.dump(data_to_store, outfile)
-    return("New contract created at" + last)
+    return("New contract created at " + tx_receipt.contractAddress)
 
 # EndPoint where the client pays the bank and the bank transfer the right amount of tokens to the client
 @app.route('/pay')
@@ -66,8 +64,8 @@ def pay():
     erc20_contract = w3.eth.contract(
         address=data["contract"], abi=interface['abi'])
     to_send = (int(data["amount"])) / float(data["rate"]) * decimals
-    print(to_send)
-    tx_hash = erc20_contract.functions.transfer(data["from"], int(to_send)).transact()
+    print( str(erc20_contract.functions.balanceOf(bankAddress).call()))
+    tx_hash = erc20_contract.functions.transfer(data["client"], int(to_send)).transact()
     w3.eth.waitForTransactionReceipt(tx_hash)
     return tx_hash
 

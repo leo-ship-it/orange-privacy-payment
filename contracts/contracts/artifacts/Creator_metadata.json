@@ -9,11 +9,44 @@
 				"constant": true,
 				"inputs": [
 					{
+						"name": "a",
+						"type": "address"
+					}
+				],
+				"name": "erc20_owner",
+				"outputs": [
+					{
 						"name": "",
 						"type": "address"
 					}
 				],
-				"name": "contracts",
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "a",
+						"type": "address"
+					}
+				],
+				"name": "destroy_erc20",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "tokens_address",
 				"outputs": [
 					{
 						"name": "",
@@ -30,7 +63,7 @@
 				"name": "deploy",
 				"outputs": [
 					{
-						"name": "newcontract",
+						"name": "",
 						"type": "address"
 					}
 				],
@@ -44,22 +77,8 @@
 				"name": "getAllContract",
 				"outputs": [
 					{
-						"name": "alladdress",
-						"type": "address[]"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "last_contract",
-				"outputs": [
-					{
 						"name": "",
-						"type": "address"
+						"type": "address[]"
 					}
 				],
 				"payable": false,
@@ -72,7 +91,7 @@
 				"name": "getOwner",
 				"outputs": [
 					{
-						"name": "own",
+						"name": "",
 						"type": "address"
 					}
 				],
@@ -82,17 +101,40 @@
 			},
 			{
 				"constant": true,
-				"inputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "contracts_address",
+				"inputs": [],
+				"name": "last_token",
 				"outputs": [
 					{
 						"name": "",
 						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "whoami",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "balance",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"payable": false,
@@ -105,7 +147,7 @@
 				"name": "getLastContract",
 				"outputs": [
 					{
-						"name": "lastcontract",
+						"name": "",
 						"type": "address"
 					}
 				],
@@ -114,28 +156,53 @@
 				"type": "function"
 			},
 			{
-				"constant": false,
-				"inputs": [],
-				"name": "addStaker",
-				"outputs": [],
-				"payable": true,
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
+				"constant": true,
 				"inputs": [
 					{
-						"name": "_owner",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "tokens",
+				"outputs": [
+					{
+						"name": "",
 						"type": "address"
 					}
 				],
 				"payable": false,
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"payable": true,
+				"stateMutability": "payable",
 				"type": "constructor"
 			}
 		],
 		"devdoc": {
-			"methods": {}
+			"methods": {
+				"constructor": {
+					"details": "Contract that manages erc20 tokens contracts."
+				},
+				"deploy()": {
+					"details": "deploy a new erc20",
+					"return": "address return the address of the deployed contract"
+				},
+				"getAllContract()": {
+					"details": "get all contracts address",
+					"return": "address[] get all the contract address"
+				},
+				"getLastContract()": {
+					"details": "get last created erc20 token address",
+					"return": "address last erc20 token address"
+				},
+				"getOwner()": {
+					"details": "get the owner of the contract",
+					"return": "address get last owner"
+				}
+			}
 		},
 		"userdoc": {
 			"methods": {}
@@ -155,15 +222,15 @@
 	},
 	"sources": {
 		"contracts/Creator.sol": {
-			"keccak256": "0x5c3d7223085ace342753cffc41f36504320d5e562111d42f10a6891f2a61a0ac",
+			"keccak256": "0x5ad56a281699b2f1ab3140109ef1cbbc5b1d1a5e9239fbe0f9417decccc9da8f",
 			"urls": [
-				"bzzr://def6bfd75e511335506891d8a51c739460544db4babbbc06c0c608812d12d8e2"
+				"bzzr://743f656dad53aeae6adf683330a5e1e90b33cad2621294bf4b3dd18b309937b1"
 			]
 		},
 		"contracts/MetaCoin.sol": {
-			"keccak256": "0xd61320e373482be0e218109010f45574e69d87213cecb0a4378fee333e7f588c",
+			"keccak256": "0xde13b9e47a5ee26fcee37b84c13f2a090130ee413bde6ff262a6005576827891",
 			"urls": [
-				"bzzr://dd9075a0348e547647f95f1323e031d950b7cb2b9f5ee5b6c1d757a6d3f5b549"
+				"bzzr://e70fdd63554499d334ef3fa356807ec2afd7d843cada49a604e1f7292319b303"
 			]
 		}
 	},

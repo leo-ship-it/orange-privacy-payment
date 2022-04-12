@@ -1,0 +1,184 @@
+{
+	"compiler": {
+		"version": "0.5.0+commit.1d4f565a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "getPayment",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					},
+					{
+						"name": "",
+						"type": "address"
+					},
+					{
+						"name": "",
+						"type": "bool"
+					},
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "request_service_and_escrow_tkn",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "paymentIds",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "service_claim",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_client",
+						"type": "address"
+					},
+					{
+						"name": "_service_provider",
+						"type": "address"
+					},
+					{
+						"name": "_erc20",
+						"type": "address"
+					},
+					{
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "init_new_payment",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "service_done",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "constructor"
+			}
+		],
+		"devdoc": {
+			"methods": {
+				"constructor": {
+					"details": "Contract that manages erc20 tokens contracts."
+				},
+				"request_service_and_escrow_tkn(uint256)": {
+					"details": "get last created erc20 token address",
+					"return": "address since:2022-04-01last erc20 token address"
+				}
+			}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/Creator.sol": "BankContract"
+		},
+		"evmVersion": "byzantium",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/Creator.sol": {
+			"keccak256": "0x04c34814c694d49de701cf120e1c98e43d1a203fa5d0c5bda0c8ba5a95175702",
+			"urls": [
+				"bzzr://ee5dd6b054f5365af3b3c9fb2f75f06715cfb0d6b2dd0d4d646205edf4f399c4"
+			]
+		},
+		"contracts/MetaCoin.sol": {
+			"keccak256": "0xc14b39bd3f8ab462e9dac80c22c4112b0cd0bd1554010243735f214ad4fb220e",
+			"urls": [
+				"bzzr://27331ce90152be103e824d849eff4dd3219517e7b5996b7fec15df2a981e7e1d"
+			]
+		}
+	},
+	"version": 1
+}
