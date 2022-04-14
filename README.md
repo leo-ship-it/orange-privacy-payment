@@ -4,9 +4,9 @@ Prototype implementing the random-value token payment solution.
 
 Requirements:
 ----
-truffle 
-ganache-cli
-python version>3 
+* truffle 
+* ganache-cli
+* python version>3 
 
 Set up the environment:
 ----
