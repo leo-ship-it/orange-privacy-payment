@@ -26,9 +26,9 @@
 	},
 	"sources": {
 		"contracts/MetaCoin.sol": {
-			"keccak256": "0xc14b39bd3f8ab462e9dac80c22c4112b0cd0bd1554010243735f214ad4fb220e",
+			"keccak256": "0x2a882f653886e4717abf1929bb8430689a74620be647ec8def0a3b20207ed5ca",
 			"urls": [
-				"bzzr://27331ce90152be103e824d849eff4dd3219517e7b5996b7fec15df2a981e7e1d"
+				"bzzr://595ffdb44be378cee01846fd7413b5b8444a380094d98742f4d874d0d4fb89aa"
 			]
 		}
 	},

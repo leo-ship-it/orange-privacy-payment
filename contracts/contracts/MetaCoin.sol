@@ -154,13 +154,13 @@ contract MetaCoin is IERC20 {
     address private _owner;
     // address private
 
-    constructor (uint256 supply) public {
+    constructor (uint256 supply, address _bank) public {
         _name = "orangeCoin";
         _symbol = "ORN";
         _decimals = 2;
         _owner = msg.sender;
 
-        _mint(msg.sender, supply * 10 ** 2); // CAUTION!
+        _mint(_bank, supply * 10 ** 2); // CAUTION!
     }
 
     /**

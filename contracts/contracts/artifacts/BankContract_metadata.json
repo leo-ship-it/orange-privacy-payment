@@ -6,10 +6,24 @@
 	"output": {
 		"abi": [
 			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "closePaymentChannel",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"constant": true,
 				"inputs": [
 					{
-						"name": "id",
+						"name": "_id",
 						"type": "uint256"
 					}
 				],
@@ -25,7 +39,7 @@
 					},
 					{
 						"name": "",
-						"type": "bool"
+						"type": "address"
 					},
 					{
 						"name": "",
@@ -37,14 +51,52 @@
 				"type": "function"
 			},
 			{
-				"constant": true,
+				"constant": false,
 				"inputs": [
 					{
-						"name": "id",
+						"name": "_client",
+						"type": "address"
+					},
+					{
+						"name": "_service_provider",
+						"type": "address"
+					},
+					{
+						"name": "_tokenSupply",
+						"type": "uint256"
+					},
+					{
+						"name": "_claimRatio",
+						"type": "uint256"
+					},
+					{
+						"name": "_claimTime",
+						"type": "uint256"
+					},
+					{
+						"name": "_id",
 						"type": "uint256"
 					}
 				],
-				"name": "request_service_and_escrow_tkn",
+				"name": "initPaymentChannel",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_id",
+						"type": "uint256"
+					},
+					{
+						"name": "_tokenAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "requestServiceAndEscrowTokens",
 				"outputs": [
 					{
 						"name": "",
@@ -52,7 +104,7 @@
 					}
 				],
 				"payable": false,
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -78,11 +130,11 @@
 				"constant": false,
 				"inputs": [
 					{
-						"name": "id",
+						"name": "_id",
 						"type": "uint256"
 					}
 				],
-				"name": "service_claim",
+				"name": "pay",
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
@@ -92,27 +144,11 @@
 				"constant": false,
 				"inputs": [
 					{
-						"name": "_client",
-						"type": "address"
-					},
-					{
-						"name": "_service_provider",
-						"type": "address"
-					},
-					{
-						"name": "_erc20",
-						"type": "address"
-					},
-					{
-						"name": "_amount",
-						"type": "uint256"
-					},
-					{
-						"name": "id",
+						"name": "_id",
 						"type": "uint256"
 					}
 				],
-				"name": "init_new_payment",
+				"name": "serviceDone",
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
@@ -122,18 +158,23 @@
 				"constant": false,
 				"inputs": [
 					{
-						"name": "id",
+						"name": "_id",
 						"type": "uint256"
 					}
 				],
-				"name": "service_done",
+				"name": "serviceClaim",
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"name": "_bank",
+						"type": "address"
+					}
+				],
 				"payable": true,
 				"stateMutability": "payable",
 				"type": "constructor"
@@ -142,11 +183,41 @@
 		"devdoc": {
 			"methods": {
 				"constructor": {
-					"details": "Contract that manages erc20 tokens contracts."
+					"details": "Contract that manages the private paymenrs channel.",
+					"params": {
+						"_bank": "address of the wallet used by the bank"
+					}
 				},
-				"request_service_and_escrow_tkn(uint256)": {
-					"details": "get last created erc20 token address",
-					"return": "address since:2022-04-01last erc20 token address"
+				"getPayment(uint256)": {
+					"details": "Get a payment info. Only the bank can call this.",
+					"params": {
+						"_id": "id of the payment"
+					}
+				},
+				"initPaymentChannel(address,address,uint256,uint256,uint256,uint256)": {
+					"details": "Init a new payment, take all the required data in input and create an erc20 token. Add the new payment to the map containing all payments.",
+					"params": {
+						"_client": "_service_provider _tokenSupply _claimRatio _claimTime _id "
+					}
+				},
+				"requestServiceAndEscrowTokens(uint256,uint256)": {
+					"details": "request a service for a certain token amount",
+					"params": {
+						"_id": "_tokenAmount id of the payment and amount of token"
+					},
+					"return": "bool true if the client has enough token allocated flase else"
+				},
+				"serviceClaim(uint256)": {
+					"details": "Client can call the contract and claim if not satisfied with service.",
+					"params": {
+						"_id": "id of the payment"
+					}
+				},
+				"serviceDone(uint256)": {
+					"details": "Service provider tell the contract that the service has been excuted",
+					"params": {
+						"_id": "id of the payment"
+					}
 				}
 			}
 		},
@@ -156,7 +227,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/Creator.sol": "BankContract"
+			"contracts/BankContract.sol": "BankContract"
 		},
 		"evmVersion": "byzantium",
 		"libraries": {},
@@ -167,16 +238,16 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/Creator.sol": {
-			"keccak256": "0x04c34814c694d49de701cf120e1c98e43d1a203fa5d0c5bda0c8ba5a95175702",
+		"contracts/BankContract.sol": {
+			"keccak256": "0x46197e8ce7dec0a85e7767cb4f3d1858b105d66fce39e599ef59e535bd4b1360",
 			"urls": [
-				"bzzr://ee5dd6b054f5365af3b3c9fb2f75f06715cfb0d6b2dd0d4d646205edf4f399c4"
+				"bzzr://acc3dbbda8be9ad1a8f9853b51fce484235e685c39225b2ca904cf21f35313c2"
 			]
 		},
 		"contracts/MetaCoin.sol": {
-			"keccak256": "0xc14b39bd3f8ab462e9dac80c22c4112b0cd0bd1554010243735f214ad4fb220e",
+			"keccak256": "0x2a882f653886e4717abf1929bb8430689a74620be647ec8def0a3b20207ed5ca",
 			"urls": [
-				"bzzr://27331ce90152be103e824d849eff4dd3219517e7b5996b7fec15df2a981e7e1d"
+				"bzzr://595ffdb44be378cee01846fd7413b5b8444a380094d98742f4d874d0d4fb89aa"
 			]
 		}
 	},

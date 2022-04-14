@@ -1,0 +1,8 @@
+{
+    "client_pub" : "0x2E4407268a7890f36cD22DeC08E4cE1f6B407492",
+    "client_pk" : "0x81d43c5a1d1001308ad5d7691e9f4905925d611910b73a5d01a80ac45db2294f",
+    "service_provider_pub" : "0x8A84446Da9C74F5937134F1436D734D586f597b4",
+    "service_provider_pk" : "0x98751e41b03e2cdccc9111433c8a874016f55899a9add833d5f236d18ffe7343",
+    "bank_address" : "0x62B9a2F427Ae8649b2467e08095C65551140926d",
+    "bank_private_key" : "0x4a43f77cc5a1e8e2d1411a272b80dcbb6cfcbb01624553a81c59bd0ef4455efc"
+}
