@@ -1,6 +1,7 @@
 from web3.auto import Web3
 import json
-import time
+import matplotlib.pylab as plt
+
 
 # This file try to call the creator contract to create a new Token
 f = open('address_test.json')
@@ -43,6 +44,7 @@ def initNewPayment():
     tx_hash = bankcontract.functions.initPaymentChannel(
         address["client_pub"], address["service_provider_pub"], 1000000, 1, blockn, id).transact()
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt.gasUsed)
     gas["initNewPayment"] = tx_receipt.gasUsed
 
 
@@ -114,20 +116,37 @@ def balanceofeveryone():
     print(erc20.functions.balanceOf(address["service_provider_pub"]).call())
     print(erc20.functions.balanceOf(address["client_pub"]).call())
 
+def closePaymentChannel():
+    w3.eth.account.privateKeyToAccount(address["bank_private_key"])
+    w3.eth.default_account = address["bank_address"]
+
+    bankcontract = w3.eth.contract(
+        address=bankcontractaddress, abi=BankContractInterface['abi'])
+    tx_hash = bankcontract.functions.closePaymentChannel(id).transact()
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    gas["closeChannel"] = tx_receipt.gasUsed
+    print("Payment Channel closed")
+
+
     
 
 
 
 bankcontractaddress = deployCreatorContract()
 
-initNewPayment()
-erc20address = getERC20Address()
-transfer()
-clientAllocateBank()
-requestservice()
-serviceDone()
-balanceofeveryone()
-pay()
-
-balanceofeveryone()
+for k in range(10):
+    initNewPayment()
+# erc20address = getERC20Address()
+# transfer()
+# clientAllocateBank()
+# requestservice()
+# serviceDone()
+# balanceofeveryone()
+# pay()
+# balanceofeveryone()
+# closePaymentChannel()
+# lists = sorted(gas.items())
+# x,y = zip(*lists)
+# plt.plot(x,y)
+# plt.show()
 print(gas)
