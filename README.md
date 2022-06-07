@@ -16,12 +16,11 @@ Set up the environment:
 
 Launch the platform: 
 ----
-* (1) ganache
+* (1) Launch the ganache test blockchain using the following command: 
 ```./scripts/launch.sh```
-
-* (2) scenario:
+* (2) Then, launch the following script to execute the scenario:
 ```cd back && python3 test_scenario.py```
-
+* (3) From the front end, you can (i) generate a new payment token, (ii) launch token payments upon request, and (iii) disable the token after the collaboration between two participants terminates.   
 
 Contact and support information:
 ---
