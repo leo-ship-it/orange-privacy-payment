@@ -24,4 +24,4 @@ Launch the platform:
 
 Contact and support information:
 ---
-Please contact tiphaine.henry@orange.com or julien.hatin@orange.com if you have any question regarding the code. 
+Please contact tiphaine.henry(at)orange(dot)com or julien.hatin(at)orange(dot)com if you have any question regarding the code. 
