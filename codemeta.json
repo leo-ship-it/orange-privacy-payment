@@ -1,0 +1,58 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "license": "Copyright (c) 2020 Orange Business Services",
+    "codeRepository": "git+https://github.com/tiphainehenry/random-value-token-payment.git",
+    "dateCreated": "2022-06-07",
+    "datePublished": "2022-06-07",
+    "dateModified": "2022-06-07",
+    "name": "random-payment-token",
+    "version": "1.0.0",
+    "description": "This repository comprises code and instructions to run the prototype implementing the random-value token payment solution introduced in the paper \"Random-value payment tokens for on-chain privacy-preserving payments\".\n",
+    "applicationCategory": "Business Process Management",
+    "funder": {
+        "@type": "Organization",
+        "name": "Orange, IP Paris"
+    },
+    "keywords": [
+        "business-processes",
+        "blockchain",
+        "payment"
+    ],
+    "programmingLanguage": [
+        "Python 3",
+        "Javascript"
+    ],
+    "operatingSystem": [
+        "Linux"
+    ],
+    "softwareRequirements": [
+        "Truffle",
+        "Ganache-cli",
+        "Python version>3"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "givenName": "Tiphaine",
+            "familyName": "HENRY",
+            "email": "tiphaine.henry@orange.com",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "Orange/ IP Paris"
+            }
+        }
+    ],
+    "contributor": [
+        {
+            "@type": "Person",
+            "givenName": "Léo",
+            "familyName": "Kazmierczak",
+            "email": "leo.kazmierczak@phelma.grenoble-inp.fr",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "Grenoble INP-Phelma"
+            }
+        }
+    ]
+}

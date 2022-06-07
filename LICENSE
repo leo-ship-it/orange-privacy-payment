@@ -1,0 +1,11 @@
+/*
+* Software Name : random-payment-token
+* Version: 1.0
+* SPDX-FileCopyrightText: Copyright (c) 2020 Orange Business Services
+*
+* This software is confidential and proprietary information of Orange Business Services.
+* You shall not disclose such Confidential Information and shall not copy, use or distribute it in whole or in part without the prior written consent of Orange Business Services
+*
+* Author: Tiphaine Henry, Léo Kazmierczak
+* Software description: This repository comprises code and instructions to run the prototype implementing the random-value token payment solution introduced in the paper \"Random-value payment tokens for on-chain privacy-preserving payments\".
+*/
